@@ -20,3 +20,6 @@ Progress is stored only in localStorage on this browser/device. Clearing browser
 
 ## GitHub Pages
 Push this project to the `main` branch of `justfrnkntech/level7math`. In repository **Settings → Pages → Build and deployment**, choose **GitHub Actions**. The included workflow runs tests, builds, and deploys on each push to main. Expected URL after successful deployment: https://justfrnkntech.github.io/level7math/ . Relative build asset paths support the repository subpath.
+
+## Bunny trail
+The Phaser rabbit hops along six stepping stones as answers are solved, smiles for correct answers, and dances after a lesson. Every third lesson celebrates a world milestone with extra confetti. The home trail shows the saved 12-lesson journey and animates the next hop when returning from a newly completed lesson. The rabbit stays visible on mobile. Reduced-motion preferences replace hops and dances with immediate position and expression changes.
