@@ -1,0 +1,6 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {lessons,question,fresh,complete,restoreCheckpoint,validState} from '../src/math.js';
+test('all worlds generate correct answers with operands of the right size',()=>{for(const l of lessons)for(let i=0;i<500;i++){const q=question(l);assert.equal(String(q.a).length,l.digits);assert.equal(String(q.b).length,l.digits);assert.equal(q.answer,q.op==='+'?q.a+q.b:q.a-q.b);assert.ok(q.answer>=0);if(l.stage===1)assert.ok([...String(q.a)].some((d,j)=>q.op==='+'?+d + +String(q.b)[j]>9:+d < +String(q.b)[j]));if(l.stage===0)for(let j=0;j<l.digits;j++){const a=+String(q.a)[j],b=+String(q.b)[j];assert.ok(q.op==='+'?a+b<=9:a>=b);}}});
+test('completion awards XP and stars without relocking progress on replay',()=>{const s=complete(fresh(),2,0);assert.equal(s.completed,3);assert.equal(s.xp,60);assert.equal(s.stars[2],3);const replay=complete(s,0,4);assert.equal(replay.completed,3);assert.equal(replay.stars[0],1);assert.equal(s.xp,60);});
+test('every checkpoint can be restored and validates',()=>{for(let i=0;i<=12;i++){const s=restoreCheckpoint(i);assert.ok(validState(s));assert.equal(s.completed,i);assert.equal(s.stars.filter(Boolean).length,i);}assert.ok(!validState({version:1}));});
