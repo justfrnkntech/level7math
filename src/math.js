@@ -1,8 +1,8 @@
 export const islands = [
-  {name:'Sunny Meadows', icon:'🌱', color:'#79b64b', subtitle:'Make friends with two-digit addition', digits:2, op:'+', skills:['No carrying','Try carrying','Addition explorer']},
-  {name:'Pebble Bay', icon:'🐚', color:'#40a8bc', subtitle:'Find the difference, one pebble at a time', digits:2, op:'−', skills:['No borrowing','Try borrowing','Subtraction explorer']},
-  {name:'Starlight Woods', icon:'🍄', color:'#8d79c6', subtitle:'A bigger adventure with three-digit addition', digits:3, op:'+', skills:['No carrying','Try carrying','Addition adventurer']},
-  {name:'Cloud Castle', icon:'🏰', color:'#db9e38', subtitle:'Reach the sky with three-digit subtraction', digits:3, op:'−', skills:['No borrowing','Try borrowing','Math champion']},
+  {name:'Sunny Meadows', icon:'🌱', color:'#b95987', subtitle:'Make friends with two-digit addition', digits:2, op:'+', skills:['No carrying','Try carrying','Addition explorer']},
+  {name:'Pebble Bay', icon:'🐚', color:'#37879d', subtitle:'Find the difference, one pebble at a time', digits:2, op:'−', skills:['No borrowing','Try borrowing','Subtraction explorer']},
+  {name:'Starlight Woods', icon:'🍄', color:'#8760b1', subtitle:'A bigger adventure with three-digit addition', digits:3, op:'+', skills:['No carrying','Try carrying','Addition adventurer']},
+  {name:'Cloud Castle', icon:'🏰', color:'#ac762c', subtitle:'Reach the sky with three-digit subtraction', digits:3, op:'−', skills:['No borrowing','Try borrowing','Math champion']},
 ];
 export const lessons = islands.flatMap((island,i)=>island.skills.map((name,j)=>({...island,name,id:i*3+j,island:i,stage:j})));
 const int=(min,max,rng)=>Math.floor(rng()*(max-min+1))+min;
