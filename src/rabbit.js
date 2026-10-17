@@ -5,33 +5,37 @@ export function rabbitGame(parent, { playing, completed, from = completed, onDan
   class RabbitTrail extends Phaser.Scene {
     create() {
       this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      this.points = playing
-        ? Array.from({ length: 7 }, (_, i) => ({ x: 48 + i * 57, y: 240 + Math.sin(i * 1.1) * 30 }))
-        : Array.from({ length: 13 }, (_, i) => ({ x: i <= 6 ? 46 + i * 58 : 394 - (i - 6) * 58, y: i <= 6 ? 147 + Math.sin(i * .9) * 25 : 286 + Math.sin(i * .9) * 20 }));
+      const steps = playing ? 6 : 12;
+      this.points = Array.from({ length: steps + 1 }, (_, i) => ({ x: 55 + i / steps * 296, y: 239 - Math.sin(i / steps * Math.PI) * 6 }));
       const g = this.add.graphics();
-      g.fillStyle(0xece5fb); g.fillRoundedRect(10, 42, 420, 310, 80);
-      g.fillStyle(0xd8d9f4); g.fillEllipse(220, 320, 390, 70);
-      g.fillStyle(0xffd9a0); g.fillCircle(365, 70, 24);
-      // Cloud puffs and tiny sakura petals frame the learning trail.
-      g.fillStyle(0xffffff, .8);
-      for (const [x,y] of [[72,72],[249,91]]) { g.fillRoundedRect(x-29,y,67,17,9); g.fillCircle(x-8,y,14); g.fillCircle(x+12,y-4,18); }
-      g.fillStyle(0xf4bed6, .9);
-      for (const [x,y] of [[32,203],[155,95],[287,331],[411,224],[210,310]]) { g.fillEllipse(x,y,9,5); g.fillEllipse(x+4,y-4,5,9); }
-      g.fillStyle(0xffffff, .95);
-      for (const [x,y] of [[125,213],[309,55],[362,324]]) { g.fillTriangle(x,y-7,x-3,y,x+3,y); g.fillTriangle(x,y+7,x-3,y,x+3,y); g.fillTriangle(x-7,y,x,y-3,x,y+3); g.fillTriangle(x+7,y,x,y-3,x,y+3); }
-      g.lineStyle(22, 0xc8aedb, 1);
-      g.beginPath(); this.points.forEach((p, i) => i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y)); g.strokePath();
-      g.lineStyle(15, 0xffedf4, 1);
-      g.beginPath(); this.points.forEach((p, i) => i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y)); g.strokePath();
-      this.nodes = this.points.map((p, i) => {
-        const milestone = !playing && i > 0 && i % 3 === 0;
-        const node = this.add.circle(p.x, p.y, milestone ? 15 : 9, 0xffffff).setStrokeStyle(3, 0xbba1ce);
-        if (milestone) this.add.text(p.x, p.y + 23, ['','Meadow','Bay','Woods','Castle'][i / 3], { fontFamily: 'Arial', fontSize: '11px', color: '#665081', backgroundColor: '#ece5fb' }).setOrigin(.5);
-        return node;
+      // An open meadow and a little home tucked into the hill.
+      g.fillStyle(0xece5fb, .55); g.fillEllipse(220, 160, 420, 200);
+      g.fillStyle(0xffd9a0); g.fillCircle(365, 64, 21);
+      g.fillStyle(0xffffff, .85);
+      for (const [x,y] of [[78,77],[224,56]]) { g.fillRoundedRect(x-24,y,57,14,7); g.fillCircle(x-7,y,11); g.fillCircle(x+10,y-3,15); }
+      g.fillStyle(0xd7e7d8); g.fillEllipse(289, 223, 278, 173);
+      g.fillStyle(0xc1d9c8); g.fillEllipse(310, 245, 233, 92);
+      g.fillStyle(0xe1e8d9); g.fillEllipse(220, 256, 420, 56);
+      // Soft earthen arch, warm wooden door, and a round glowing window.
+      g.fillStyle(0xc2a4bd); g.fillRoundedRect(318,174,69,79,{tl:34,tr:34,bl:8,br:8});
+      g.fillStyle(0x76596f); g.fillRoundedRect(325,181,55,69,{tl:27,tr:27,bl:5,br:5});
+      g.fillStyle(0xb4899e); g.fillRoundedRect(329,185,47,62,{tl:23,tr:23,bl:4,br:4});
+      g.lineStyle(1,0x98748d); g.lineBetween(342,191,342,245); g.lineBetween(355,187,355,245); g.lineBetween(367,192,367,245);
+      g.fillStyle(0xffe2a8); g.fillCircle(352,204,10); g.lineStyle(2,0x76596f); g.strokeCircle(352,204,10); g.lineBetween(342,204,362,204); g.lineBetween(352,194,352,214);
+      g.fillStyle(0xffd995); g.fillCircle(367,229,3);
+      g.fillStyle(0xd0b9cc); g.fillEllipse(352,252,72,11);
+      // Meadow flowers quietly show completed hops, without a separate track.
+      this.nodes = this.points.map((p,i) => {
+        g.lineStyle(1,0x94b59c); g.lineBetween(p.x,260,p.x,267);
+        return this.add.circle(p.x,259,playing ? 3 : 2.5,0xffffff);
       });
-      this.add.text(220, 23, playing ? 'One happy hop for every answer' : 'Your bunny’s adventure trail', { fontFamily: 'Arial', fontSize: '18px', color: '#665081' }).setOrigin(.5);
-      this.caption = this.add.text(220, 363, '', { fontFamily: 'Arial', fontSize: '16px', color: '#665081' }).setOrigin(.5);
-      this.bunny = this.add.container(0, 0);
+      for (const [x,y] of [[199,207],[268,161],[404,224],[111,244]]) {
+        g.fillStyle(0xeeb7d0); g.fillCircle(x-3,y,3); g.fillCircle(x+3,y,3); g.fillCircle(x,y-3,3); g.fillCircle(x,y+3,3);
+        g.fillStyle(0xffe2a8); g.fillCircle(x,y,2);
+      }
+      this.add.text(220, 20, playing ? 'Hop home to your cozy burrow' : 'A little closer to home with every lesson', { fontFamily: 'Arial', fontSize: '16px', color: '#665081' }).setOrigin(.5);
+      this.caption = this.add.text(220, 288, '', { fontFamily: 'Arial', fontSize: '14px', color: '#665081' }).setOrigin(.5);
+      this.bunny = this.add.container(0, 0).setScale(.78);
       const body = this.add.graphics();
       // Chibi proportions: a large plush head over a tiny pear-shaped body.
       body.fillStyle(0xd7c9e3, .65); body.fillEllipse(0, 4, 56, 11);
@@ -116,9 +120,9 @@ export function rabbitGame(parent, { playing, completed, from = completed, onDan
       this.tweens.add({ targets: this.bunny, y: this.bunny.y - 22, duration: 170, yoyo: true, repeat: 7 });
       for (let i = 0; i < (milestone ? 50 : 25); i++) {
         const p = this.add.rectangle(this.bunny.x, this.bunny.y - 60, 7, 10, Phaser.Utils.Array.GetRandom([0xf1bf54, 0x91c7df, 0xeaa8c0, 0x8f83c5]));
-        this.tweens.add({ targets: p, x: Phaser.Math.Between(25, 415), y: 350, angle: 240, alpha: 0, duration: 1500, onComplete: () => p.destroy() });
+        this.tweens.add({ targets: p, x: Phaser.Math.Between(25, 415), y: 265, angle: 240, alpha: 0, duration: 1500, onComplete: () => p.destroy() });
       }
     }
   }
-  return new Phaser.Game({ type: Phaser.AUTO, width: 440, height: 390, parent, transparent: true, scene: RabbitTrail, scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH }, audio: { noAudio: true }, banner: false });
+  return new Phaser.Game({ type: Phaser.AUTO, width: 440, height: 310, parent, transparent: true, scene: RabbitTrail, scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH }, audio: { noAudio: true }, banner: false });
 }

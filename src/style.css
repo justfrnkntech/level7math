@@ -16,3 +16,8 @@ h1 em{color:#ad477a}.primary{box-shadow:0 5px 15px #8252b01a}.primary:hover{back
 .correct{color:#317a83}input:focus-visible,select:focus-visible{outline:3px solid #b991d9;outline-offset:2px}
 .kind-note{border:1px solid #eadcf3;background:linear-gradient(100deg,#fce9f1,#eeebff)}
 dialog{background:#fffafd}dialog::backdrop{background:#40325570}
+
+/* Compact burrow vignette replaces the oversized trail panel. */
+#mascot,#play-mascot{aspect-ratio:440/310}
+.coach p{display:none}
+@media(max-width:700px){.coach{max-width:250px}.intro #mascot{max-width:320px;margin:12px auto 0}.play-grid{gap:8px}}
