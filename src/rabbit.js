@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 
 // A single scene owns the trail, rabbit, and all celebration animations.
-export function rabbitGame(parent, { playing, completed, from = completed }) {
+export function rabbitGame(parent, { playing, completed, from = completed, onDance = () => {} }) {
   class RabbitTrail extends Phaser.Scene {
     create() {
       this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -78,6 +78,7 @@ export function rabbitGame(parent, { playing, completed, from = completed }) {
     dance() {
       this.finishPending = false; this.paintFace(true);
       const milestone = (completed + 1) % 3 === 0;
+      onDance(milestone);
       this.caption.setText(milestone ? 'World complete! A big bunny hooray!' : 'You did it! Time for a bunny dance!');
       if (this.reduced) return;
       this.tweens.add({ targets: this.bunny, angle: { from: -13, to: 13 }, duration: 170, yoyo: true, repeat: 7, onComplete: () => this.bunny.setAngle(0) });

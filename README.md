@@ -23,3 +23,6 @@ Push this project to the `main` branch of `justfrnkntech/level7math`. In reposit
 
 ## Bunny trail
 The Phaser rabbit hops along six stepping stones as answers are solved, smiles for correct answers, and dances after a lesson. Every third lesson celebrates a world milestone with extra confetti. The home trail shows the saved 12-lesson journey and animates the next hop when returning from a newly completed lesson. The rabbit stays visible on mobile. Reduced-motion preferences replace hops and dances with immediate position and expression changes.
+
+## Sounds
+Use the music-note button in the header to mute or enable sound; the preference is remembered on this browser. Correct answers play a chime, retries a soft boop, lesson dances a musical flourish, and world milestones a gentle synthesized horn fanfare. Audio starts only after interaction, stops when muted or the page is hidden, and requires no external sound downloads. Unavailable audio does not prevent gameplay.
